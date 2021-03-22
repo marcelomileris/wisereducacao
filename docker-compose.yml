@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+
+  db:
+    image: 'postgres:latest'
+    container_name: url-encurtador-db
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./pgdata:/var/lib/postgres
+    environment:
+      - POSTGRES_DB=url
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+
+  app:
+    container_name: url-encurtador
+    restart: always
+    build: .
+    ports:
+      - 8080:8080
+    depends_on: 
+      - db
